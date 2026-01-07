@@ -1,4 +1,6 @@
 <script>
+	import { goto } from "$app/navigation";
+
 	let menuOpen = false;
 </script>
 
@@ -13,7 +15,7 @@
 
 	<!-- DESKTOP MENU -->
 	<ul class="hidden space-x-10 text-[16px] font-medium text-gray-700 md:flex">
-		<li><a href="#" class="hover:text-emerald-500">Home</a></li>
+		<li><a href="/" class="hover:text-emerald-500">Home</a></li>
 		<li><a href="#" class="hover:text-emerald-500">Services</a></li>
 		<li><a href="#" class="hover:text-emerald-500">Pricing</a></li>
 		<li><a href="#" class="hover:text-emerald-500">Contact</a></li>
@@ -21,8 +23,11 @@
 
 	<!-- DESKTOP BUTTONS -->
 	<div class="hidden items-center space-x-6 text-[15px] font-medium md:flex">
-		<button class="hover:text-emerald-500">Login</button>
+		<button class="hover:text-emerald-500"
+		on:click={()=>{goto('/auth/login')}}
+		>Login</button>
 		<button
+			on:click={()=>{goto('/auth/signup')}}
 			class="rounded-lg bg-emerald-500 px-6 py-2 text-white transition-all hover:bg-emerald-600"
 		>
 			JOIN US →
