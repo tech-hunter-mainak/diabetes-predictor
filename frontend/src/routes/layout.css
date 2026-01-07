@@ -1,3 +1,15 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+.input {
+	@apply w-full rounded border p-2;
+}
+
+.btn {
+	@apply w-full rounded bg-black py-2 text-white;
+}
+
+.service-card {
+	@apply cursor-pointer rounded-xl p-8 text-center shadow-md transition-all duration-200 hover:scale-[1.03];
+}

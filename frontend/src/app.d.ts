@@ -33,4 +33,4 @@ interface User {
 	role: 'patient' | 'doctor' | 'admin';
 }
 
-export { };
+export {};

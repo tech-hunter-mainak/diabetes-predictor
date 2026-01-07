@@ -1,75 +1,28 @@
-import type { Handle, RequestEvent } from '@sveltejs/kit';
-import { redirect } from '@sveltejs/kit';
+// src/hooks.server.ts
+import { createSupabaseAuthClient } from '$lib/supabase';
 
-/**
- * Public routes that do NOT require authentication
- * Add onboarding / landing pages here if needed
- */
-const PUBLIC_ROUTES = ['/auth', '/auth/login', '/auth/signup'];
+export const handle = async ({ event, resolve }) => {
+	const access = event.cookies.get('sb-access');
+	const refresh = event.cookies.get('sb-refresh');
 
-/**
- * Attach user session to event.locals
- * This is the single source of truth for auth state
- */
-async function getUserFromSession(event: RequestEvent) {
-    const sessionToken = event.cookies.get('session');
+	const supabase = createSupabaseAuthClient();
+	let user = null;
 
-    if (!sessionToken) {
-        return null;
-    }
+	if (access && refresh) {
+		const { data } = await supabase.auth.getUser(access);
+		user = data?.user || null;
+	}
 
-    try {
-        /**
-         * NOTE:
-         * Replace this with a real call to your backend later.
-         * For now, assume sessionToken is a JWT or opaque token.
-         */
-        const res = await fetch('http://localhost:8000/auth/validate', {
-            headers: {
-                Authorization: `Bearer ${sessionToken}`
-            }
-        });
+	event.locals.user =
+		user && user.email
+			? {
+					...user,
+					email: user.email || '',
+					role: ['patient', 'doctor', 'admin'].includes(user.role || '')
+						? (user.role as 'patient' | 'doctor' | 'admin')
+						: 'patient'
+				}
+			: null;
 
-        if (!res.ok) return null;
-
-        const user = await res.json();
-        return user;
-    } catch {
-        return null;
-    }
-}
-
-export const handle: Handle = async ({ event, resolve }) => {
-    /**
-     * Load user into locals
-     * Accessible in all +page.server.ts files
-     */
-    event.locals.user = await getUserFromSession(event);
-
-    const pathname = event.url.pathname;
-
-    const isPublicRoute = PUBLIC_ROUTES.some((route) =>
-        pathname.startsWith(route)
-    );
-
-    /**
-     * Redirect unauthenticated users
-     */
-    if (!event.locals.user && !isPublicRoute) {
-        throw redirect(303, '/auth/login');
-    }
-
-    /**
-     * Security headers (important for medical apps)
-     */
-    const response = await resolve(event, {
-        filterSerializedResponseHeaders: (name) =>
-            name === 'content-type'
-    });
-
-    response.headers.set('X-Frame-Options', 'DENY');
-    response.headers.set('X-Content-Type-Options', 'nosniff');
-    response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-
-    return response;
+	return await resolve(event);
 };
