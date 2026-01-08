@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ChooseUs from '$lib/components/Home/ChooseUs.svelte';
 	import WhoWeAre from '$lib/components/Home/WhoWeAre.svelte';
+	import chatInterface from '$lib/assets/images/chat.svg';
 
 	let menuOpen = false;
 </script>
@@ -38,7 +39,7 @@
 		</div>
 
 		<!-- RIGHT BLOCK IMAGE -->
-		<div class="relative flex w-full justify-center">
+		<div class="relative flex w-full justify-center lg:w-[50%]">
 			<!-- Gradient BG -->
 			<div
 				class="absolute top-0 h-[350px] w-[350px] rounded-full bg-gradient-to-br from-emerald-400 to-purple-500 opacity-70 blur-[80px] md:h-[420px] md:w-[420px]"
@@ -46,9 +47,9 @@
 
 			<!-- Doctor Image -->
 			<img
-				src="/doctor.png"
+				src={chatInterface}
 				alt="Doctor"
-				class="relative z-10 w-[280px] select-none md:w-[380px] lg:w-[420px]"
+				class="relative z-10 w-[280px] rounded-2xl select-none md:w-[380px] lg:w-[420px]"
 			/>
 		</div>
 	</section>

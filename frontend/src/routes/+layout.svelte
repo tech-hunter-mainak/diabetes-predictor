@@ -13,7 +13,6 @@
 	{#if $page.url.pathname.startsWith('/dashboard')}
 		<!-- Custom layout for /dashboard -->
 		<div class="dashboard-layout">
-			<Navbar />
 			<main>{@render children()}</main>
 		</div>
 	{:else}

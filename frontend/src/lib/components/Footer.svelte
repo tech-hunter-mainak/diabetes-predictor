@@ -1,4 +1,4 @@
-<footer class="w-screen border-t border-green-200 bg-green-50">
+<footer class="border-t border-green-200 bg-green-50">
 	<div
 		class="flex flex-col items-center justify-between space-y-6 px-6 py-8 md:flex-row md:space-y-0"
 	>

@@ -1,35 +1,16 @@
-import type { PageServerLoad } from './$types';
+// src/routes/logout/+page.server.ts
 import { redirect } from '@sveltejs/kit';
-import { createServerClient } from '@supabase/ssr';
 
-export const load: PageServerLoad = async (event) => {
-	// Initialize Supabase server client
-	const supabase = createServerClient(process.env.SUPABASE_URL!, process.env.SUPABASE_ANON_KEY!, {
-		cookies: {
-			get: (name) => event.cookies.get(name),
-			set: (name, value, options) => {
-				event.cookies.set(name, value, {
-					...options,
-					path: '/'
-				});
-			},
-			remove: (name, options) => {
-				event.cookies.delete(name, {
-					...options,
-					path: '/'
-				});
-			}
-		}
-	});
+export const load = async ({ cookies }) => {
+    // Delete your own app cookies
+    cookies.delete('session', { path: '/' });
+    cookies.delete('user', { path: '/' });
 
-	// Sign out user from Supabase if session exists
-	await supabase.auth.signOut();
+    // If using Supabase SSR cookies
+    cookies.delete('sb-access-token', { path: '/' });
+    cookies.delete('sb-refresh-token', { path: '/' });
+    cookies.delete('sb-auth-token', { path: '/' });
 
-	// Explicitly delete Supabase auth cookies
-	event.cookies.delete('sb-access-token', { path: '/' });
-	event.cookies.delete('sb-refresh-token', { path: '/' });
-	event.cookies.delete('sb-auth-token', { path: '/' });
-
-	// Redirect to login page
-	throw redirect(303, '/auth/login');
+    // Redirect to login page
+    throw redirect(302, '/auth/login');
 };

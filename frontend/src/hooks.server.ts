@@ -1,28 +1,20 @@
-// src/hooks.server.ts
-import { createSupabaseAuthClient } from '$lib/supabase';
+import { redirect, type Handle } from '@sveltejs/kit';
 
-export const handle = async ({ event, resolve }) => {
-	const access = event.cookies.get('sb-access');
-	const refresh = event.cookies.get('sb-refresh');
+export const handle: Handle = async ({ event, resolve }) => {
+    // Adjust cookie names based on actual Supabase SSR cookies
+    const access = event.cookies.get('sb-access-token');
+    const refresh = event.cookies.get('sb-refresh-token');
 
-	const supabase = createSupabaseAuthClient();
-	let user = null;
+    const isLoggedIn = Boolean(access && refresh);
+    const path = event.url.pathname;
 
-	if (access && refresh) {
-		const { data } = await supabase.auth.getUser(access);
-		user = data?.user || null;
-	}
+    if (isLoggedIn && path.startsWith('/auth')) {
+        throw redirect(303, '/dashboard');
+    }
 
-	event.locals.user =
-		user && user.email
-			? {
-					...user,
-					email: user.email || '',
-					role: ['patient', 'doctor', 'admin'].includes(user.role || '')
-						? (user.role as 'patient' | 'doctor' | 'admin')
-						: 'patient'
-				}
-			: null;
+    if (!isLoggedIn && path.startsWith('/dashboard')) {
+        throw redirect(303, '/auth/login');
+    }
 
-	return await resolve(event);
+    return await resolve(event);
 };

@@ -71,30 +71,7 @@
 	}
 </script>
 
-<style>
-	/* Triple-dot typing animation */
-	.typing {
-		display: flex;
-		gap: 6px;
-	}
-	.typing div {
-		width: 8px;
-		height: 8px;
-		background: #6b7280;
-		border-radius: 50%;
-		animation: blink 1.4s infinite both;
-	}
-	.typing div:nth-child(2) { animation-delay: 0.2s; }
-	.typing div:nth-child(3) { animation-delay: 0.4s; }
-
-	@keyframes blink {
-		0% { opacity: .2; }
-		20% { opacity: 1; }
-		100% { opacity: .2; }
-	}
-</style>
-
-<div class="flex h-screen flex-col bg-green-50">
+<div class="flex h-[calc(100vh-60px)] flex-col bg-green-50">
 	<!-- Header -->
 	<div class="flex items-center justify-between bg-green-600 px-6 py-4 text-white shadow-md">
 		<h1 class="text-lg font-semibold">Medical Chat Bot</h1>
@@ -131,7 +108,9 @@
 			<div class="flex justify-start">
 				<div class="max-w-[80%] rounded-xl border border-green-200 bg-white p-4 shadow-md">
 					<div class="typing">
-						<div></div><div></div><div></div>
+						<div></div>
+						<div></div>
+						<div></div>
 					</div>
 				</div>
 			</div>
@@ -141,8 +120,8 @@
 	<!-- Image preview box -->
 	{#if previewUrl}
 		<div class="flex items-center gap-3 border-t border-green-200 bg-white p-3">
-			<img src={previewUrl} class="h-16 w-16 rounded object-cover border" />
-			<button on:click={clearImage} class="text-red-600 text-2xl font-bold leading-none">×</button>
+			<img src={previewUrl} class="h-16 w-16 rounded border object-cover" />
+			<button on:click={clearImage} class="text-2xl leading-none font-bold text-red-600">×</button>
 		</div>
 	{/if}
 
@@ -177,3 +156,36 @@
 		</button>
 	</div>
 </div>
+
+<style>
+	/* Triple-dot typing animation */
+	.typing {
+		display: flex;
+		gap: 6px;
+	}
+	.typing div {
+		width: 8px;
+		height: 8px;
+		background: #6b7280;
+		border-radius: 50%;
+		animation: blink 1.4s infinite both;
+	}
+	.typing div:nth-child(2) {
+		animation-delay: 0.2s;
+	}
+	.typing div:nth-child(3) {
+		animation-delay: 0.4s;
+	}
+
+	@keyframes blink {
+		0% {
+			opacity: 0.2;
+		}
+		20% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0.2;
+		}
+	}
+</style>

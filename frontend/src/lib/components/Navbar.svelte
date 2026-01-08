@@ -1,12 +1,12 @@
 <script>
-	import { goto } from "$app/navigation";
+	import { goto } from '$app/navigation';
 
 	let menuOpen = false;
 </script>
 
 <!-- NAVIGATION BAR -->
 <nav
-	class="fixed z-20 flex w-full items-center justify-between bg-white px-6 py-6 shadow-sm md:px-12"
+	class="fixed z-20 flex w-full items-center justify-between bg-white px-6 py-4 shadow-sm md:px-12"
 >
 	<!-- LOGO -->
 	<div class="text-3xl font-extrabold tracking-tight select-none">
@@ -23,11 +23,16 @@
 
 	<!-- DESKTOP BUTTONS -->
 	<div class="hidden items-center space-x-6 text-[15px] font-medium md:flex">
-		<button class="hover:text-emerald-500"
-		on:click={()=>{goto('/auth/login')}}
-		>Login</button>
 		<button
-			on:click={()=>{goto('/auth/signup')}}
+			class="hover:text-emerald-500"
+			on:click={() => {
+				goto('/auth/login');
+			}}>Login</button
+		>
+		<button
+			on:click={() => {
+				goto('/auth/signup');
+			}}
 			class="rounded-lg bg-emerald-500 px-6 py-2 text-white transition-all hover:bg-emerald-600"
 		>
 			JOIN US →

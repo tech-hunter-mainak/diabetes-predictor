@@ -1,6 +1,37 @@
+/* ============================================================
+   TAILWIND IMPORTS + PLUGINS (YOUR ORIGINAL CONTENT)
+   ============================================================ */
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+/* ============================================================
+   GLOBAL VARIABLES AND COLORS
+   ============================================================ */
+@layer base {
+	:root {
+		--kucoin-green: #2ed09e;
+		--grey-bg: #f1f3f6;
+		--grey-card: #f7f8fa;
+		--grey-border: #e7e9ee;
+		--text-dark: #2a2a2a;
+		--text-light: #6b7280;
+		--card-radius: 14px;
+		--card-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+	}
+
+	html,
+	body {
+		background: var(--grey-bg);
+		color: var(--text-dark);
+		font-family: 'Inter', sans-serif;
+		-webkit-font-smoothing: antialiased;
+	}
+}
+
+/* ============================================================
+   YOUR ORIGINAL CUSTOM UTILITIES (kept exactly)
+   ============================================================ */
 
 .input {
 	@apply w-full rounded border p-2;
@@ -12,4 +43,136 @@
 
 .service-card {
 	@apply cursor-pointer rounded-xl p-8 text-center shadow-md transition-all duration-200 hover:scale-[1.03];
+}
+
+/* ============================================================
+   EXTENDED CUSTOM UI UTILITIES
+   ============================================================ */
+@layer components {
+	/* Generic card */
+	.card {
+		@apply rounded-[14px] bg-white p-6 shadow;
+		box-shadow: var(--card-shadow);
+	}
+
+	/* Sidebar */
+	.sidebar {
+		@apply rounded-[14px] bg-white p-6 shadow;
+		height: calc(100vh - 48px);
+		position: sticky;
+		top: 24px;
+		width: 250px;
+	}
+
+	.sidebar-item {
+		@apply cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 transition-all;
+	}
+
+	.sidebar-item:hover {
+		background: rgba(46, 208, 158, 0.1);
+		color: var(--kucoin-green);
+	}
+
+	.sidebar-item-active {
+		background: rgba(46, 208, 158, 0.15);
+		color: var(--kucoin-green);
+		font-weight: 600;
+	}
+
+	/* Header */
+	.header {
+		@apply flex items-center justify-between rounded-[14px] bg-white p-6 shadow;
+	}
+
+	.header-search {
+		@apply rounded-lg border border-gray-300 p-2;
+		width: 220px;
+	}
+
+	/* Info box */
+	.info-box {
+		background: var(--grey-card);
+		border: 1px solid var(--grey-border);
+		border-radius: var(--card-radius);
+		padding: 1rem;
+	}
+
+	.info-label {
+		@apply mb-1 block text-xs text-gray-500;
+	}
+
+	.info-value {
+		@apply text-base font-semibold;
+	}
+
+	/* Buttons */
+	.btn-green {
+		@apply w-full rounded-lg py-3 text-white;
+		background: var(--kucoin-green);
+	}
+
+	.btn-outline-green {
+		@apply w-full rounded-lg border py-3;
+		border-color: var(--kucoin-green);
+		color: var(--kucoin-green);
+		background: rgba(46, 208, 158, 0.1);
+	}
+
+	/* Market table */
+	.market-table {
+		@apply w-full border-collapse;
+	}
+
+	.market-table th {
+		@apply border-b py-2 text-left text-sm;
+		color: var(--text-light);
+		border-color: var(--grey-border);
+	}
+
+	.market-table td {
+		@apply border-b py-3;
+		border-color: var(--grey-border);
+	}
+
+	/* Green dot beside coins */
+	.dot-green {
+		width: 10px;
+		height: 10px;
+		background: var(--kucoin-green);
+		border-radius: 50%;
+	}
+
+	/* Trade button */
+	.btn-trade {
+		@apply rounded-lg px-4 py-1 text-sm text-white;
+		background: var(--kucoin-green);
+	}
+}
+
+/* ============================================================
+   RESPONSIVE GRID SYSTEM
+   ============================================================ */
+@layer utilities {
+	.grid-dashboard {
+		@apply grid gap-6;
+	}
+
+	@media (min-width: 768px) {
+		.grid-dashboard {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (min-width: 1280px) {
+		.grid-dashboard {
+			grid-template-columns: repeat(4, 1fr);
+		}
+	}
+
+	/* hide sidebar on mobile */
+	@media (max-width: 1024px) {
+		.sidebar {
+			display: none;
+		}
+	}
 }
