@@ -11,36 +11,37 @@
 </script>
 
 <!-- PAGE WRAPPER -->
-<div class="flex flex-col h-screen bg-gray-50">
-
+<div class="flex h-screen flex-col bg-gray-50">
 	<!-- NAVBAR -->
-	<header class="flex items-center justify-between w-full h-14 px-6 bg-white border-b">
+	<header class="flex h-14 w-full items-center justify-between border-b bg-white px-6">
 		<div class="flex items-center gap-3">
 			<img src="/logo.svg" alt="logo" class="h-6" />
-			<h1 class="font-semibold text-gray-800 text-lg">Diabetes Predictor</h1>
+			<h1 class="text-lg font-semibold text-gray-800">Diabetes Predictor</h1>
 		</div>
 
 		<div class="flex items-center gap-4">
 			<button class="text-gray-600 hover:text-green-600">
 				<iconify-icon icon="mdi:bell-outline" width="24"></iconify-icon>
 			</button>
-				<button on:click={() => goto('/logout')} class="bg-green-600 text-white px-3 py-1.5 rounded-md text-sm hover:bg-green-700">
-					Logout
-				</button>
+			<button
+				on:click={() => goto('/logout')}
+				class="rounded-md bg-green-600 px-3 py-1.5 text-sm text-white hover:bg-green-700"
+			>
+				Logout
+			</button>
 		</div>
 	</header>
 
 	<div class="flex flex-1">
-
 		<!-- SIDEBAR (DESKTOP) -->
-		<aside class="hidden lg:flex flex-col w-56 bg-white border-r px-4 py-6">
+		<aside class="hidden w-56 flex-col border-r bg-white px-4 py-6 lg:flex">
 			<nav class="flex flex-col gap-1 text-gray-700">
 				{#each nav as item}
 					<a
 						href={item.href}
-						class="flex items-center gap-3 px-3 py-2 rounded-md
+						class="flex items-center gap-3 rounded-md px-3 py-2
 						hover:bg-green-50 hover:text-green-700
-						{ $page.url.pathname === item.href ? 'bg-green-100 text-green-700 font-medium' : '' }"
+						{$page.url.pathname === item.href ? 'bg-green-100 font-medium text-green-700' : ''}"
 					>
 						<iconify-icon icon={item.icon} width="20"></iconify-icon>
 						{item.name}
@@ -56,9 +57,9 @@
 	</div>
 
 	<!-- MOBILE NAVIGATION -->
-	<nav class="lg:hidden fixed bottom-0 w-full bg-white border-t flex justify-around py-2">
+	<nav class="fixed bottom-0 flex w-full justify-around border-t bg-white py-2 lg:hidden">
 		{#each nav as item}
-			<a href={item.href} class="flex flex-col items-center text-gray-600 text-xs">
+			<a href={item.href} class="flex flex-col items-center text-xs text-gray-600">
 				<iconify-icon icon={item.icon} width="26"></iconify-icon>
 			</a>
 		{/each}

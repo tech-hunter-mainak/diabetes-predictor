@@ -1,4 +1,5 @@
 <script lang="ts">
+	import imageHome1 from '$lib/assets/images/image_home_1.jpg';
 	// No logic required for this static section
 </script>
 
@@ -29,14 +30,14 @@
 	<div class="relative flex w-full justify-center md:w-auto">
 		<!-- Main Image -->
 		<img
-			src="/doctor-talking.png"
+			src={imageHome1}
 			alt="Doctor consultation"
-			class="w-[350px] rounded-2xl shadow-md select-none md:w-[420px]"
+			class="w-87.5 rounded-2xl shadow-md select-none md:w-105"
 		/>
 
 		<!-- Floating Relief Card -->
 		<div
-			class="absolute bottom-[-40px] left-1/2 w-[260px] -translate-x-1/2 transform rounded-xl bg-white p-6 text-center shadow-xl md:w-[300px]"
+			class="absolute bottom-[-80px] left-1/2 w-[260px] -translate-x-1/2 transform rounded-xl bg-white p-6 text-center shadow-xl md:w-[300px]"
 		>
 			<h3 class="mb-2 text-xl font-semibold text-emerald-500">Looking for Relief ?</h3>
 			<p class="text-sm leading-relaxed text-gray-600">
